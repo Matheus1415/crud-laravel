@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -22,49 +23,59 @@ class UsersController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
-    }
+        return view('users_edit', ['user' => $user]);
+    }    
+    
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        // Encontrar o usuário pelo ID
+        $user = User::find($id);
+        
+        // Verificar se o usuário existe
+        if (!$user) {
+            return redirect()->back()->with('message', 'Usuário não encontrado');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);        
+        
+        // Atualizar os campos do usuário com os dados do formulário
+        $user->name = $request->name; // Aqui use o nome do campo no formulário
+    
+        // Salvar as alterações no banco de dados
+        $update = $user->save();
+    
+        // Verificar se a atualização foi bem-sucedida
+        if ($update) {
+            return redirect()->back()->with('message', 'Usuário atualizado com sucesso');
+        } else {
+            return redirect()->back()->with('message', 'Erro ao atualizar o usuário');
+        }
+    }
+       
+    
+
     public function destroy(string $id)
     {
         //
