@@ -93,8 +93,22 @@ class UsersController extends Controller
            
     
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Encontre o usuário pelo ID
+        $user = User::find($id);
+        
+        // Verifique se o usuário foi encontrado
+        if (!$user) {
+            return redirect()->back()->with('error', 'Usuário não encontrado');
+        }
+
+        // Exclua o usuário
+        $user->delete();
+
+        // Redirecione de volta com uma mensagem de sucesso
+        return redirect()->back()->with('message', 'Usuário excluído com sucesso');
     }
+        
+    
 }

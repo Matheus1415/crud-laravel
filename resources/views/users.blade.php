@@ -1,12 +1,20 @@
 @extends('master')
 
 @section('content')
-<a href="{{route('users.create')}}">Criar usúario</a>
+<a href="{{ route('users.create') }}">Criar usuário</a>
 <hr>
-    <h1>Minha Lista de user</h1>
-    <ul>
-        @foreach ($users as $user)
-            <li>{{$user->name}} | <a href="{{route('users.edit', $user)}}" id="edit">Edit</a> | <a href="{{route('users.destroy', $user->id)}}" id="x">X</a></li>
-        @endforeach
-    </ul>
+<h1>Minha Lista de Usuários</h1>
+<ul>
+    @foreach ($users as $user)
+    <li>
+        {{ $user->name }} | 
+        <a href="{{ route('users.edit', $user->id) }}" id="edit">Editar</a> | 
+        <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" id="x">Excluir</button>
+        </form>
+    </li>
+    @endforeach
+</ul>
 @endsection
