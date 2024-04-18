@@ -1,6 +1,8 @@
 @extends('master')
 
 @section('content')
+<a href="{{route('users.create')}}">Criar usúario</a>
+<hr>
     <h1>Minha Lista de user</h1>
     <ul>
         @foreach ($users as $user)

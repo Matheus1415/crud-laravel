@@ -3,7 +3,7 @@
 @section('content')
 
     @if (session()->has('messagem'))
-        {{ session()->get('messagem') }}
+        <p>{{ session()->get('messagem') }}</p>
     @endif
 
     <h1>Editando Usuário</h1>
